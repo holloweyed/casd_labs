@@ -10,6 +10,7 @@ namespace casd_labs
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
