@@ -14,7 +14,7 @@ using casd_labs;
 public class Calculator
 {
 
-    private static string[] operators = { "+", "-", "*", "/", "^", "√", "sin", "cos", "tan", "ln", "log", "exp", "min", "max", "%", "//", "trunc", "(", ")" };
+    private static string[] operators = { "+", "-", "*", "/", "^", "sqrt", "sin", "cos", "tan", "ln", "log", "exp", "min", "max", "%", "//", "trunc", "(", ")" };
     private static string numberPattern = @"^-?\d+(\.\d+)?$";
 
     public static void Parse(string expression, out MyStack<double> numbers, out MyStack<string> signs)
@@ -139,7 +139,7 @@ public class Calculator
             var b = numbers.Pop();
             return Math.Pow(b, a);
         }
-        else if (sign == "√")
+        else if (sign == "sqrt")
             return Math.Sqrt(numbers.Pop());
         else if (sign == "sin")
             return Math.Sin(numbers.Pop());
