@@ -118,13 +118,10 @@ public class MyPriorityQueue<T>
 
     public bool Contains(object o)
     {
-        if (o is T item) // why
+        for (int i = 0; i < size; i++)
         {
-            for (int i = 0; i < size; i++)
-            {
-                if (queue[i].Equals(item))
-                    return true;
-            }
+            if (queue[i].Equals(o))
+                return true;
         }
         return false;
     }
@@ -142,19 +139,16 @@ public class MyPriorityQueue<T>
 
     public void Remove(object o)
     {
-        if (o is T item) // why
+        for (int i = 0; i < size; i++)
         {
-            for (int i = 0; i < size; i++)
+            if (queue[i].Equals(o))
             {
-                if (queue[i].Equals(item))
-                {
-                    if (i < 0 || i >= size)
-                        throw new ArgumentOutOfRangeException(nameof(i));
+                if (i < 0 || i >= size)
+                    throw new ArgumentOutOfRangeException(nameof(i));
 
-                    queue[i] = queue[size - 1];
-                    size--;
-                    Heapify(i);
-                }
+                queue[i] = queue[size - 1];
+                size--;
+                Heapify(i);
             }
         }
     }
@@ -169,7 +163,7 @@ public class MyPriorityQueue<T>
 
     public void RetainAll(T[] a)
     {
-        HashSet<T> toRetain = new HashSet<T>(a); // why
+        HashSet<T> toRetain = new HashSet<T>(a);
         for (int i = 0; i < size; i++)
         {
             if (!toRetain.Contains(queue[i]))
@@ -225,14 +219,14 @@ public class MyPriorityQueue<T>
     public T Peek()
     {
         if (IsEmpty())
-            return default(T); // why
+            return default(T);
         return queue[0];
     }
 
     public T Poll()
     {
         if (IsEmpty())
-            return default(T); // why
+            return default(T);
         T result = queue[0];
         queue[0] = queue[size - 1];
         size--;
