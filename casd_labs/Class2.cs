@@ -11,7 +11,7 @@ public class MyPriorityQueue<T>
     private int size;
     private IComparer<T> comparator;
 
-    public MyPriorityQueue() : this(11, null) { }
+    public MyPriorityQueue() : this(11, null) { } // конструкторы такого вида обращаются к "основному"
 
     public MyPriorityQueue(T[] a)
     {
@@ -24,7 +24,7 @@ public class MyPriorityQueue<T>
 
     public MyPriorityQueue(int initialCapacity) : this(initialCapacity, null) { }
 
-    public MyPriorityQueue(int initialCapacity, IComparer<T> comparator)
+    public MyPriorityQueue(int initialCapacity, IComparer<T> comparator) // "основной" конструктор
     {
         queue = new T[initialCapacity];
         size = 0;
@@ -40,6 +40,8 @@ public class MyPriorityQueue<T>
         CreateHeap();
     }
 
+    private int Compare(T x, T y) => comparator.Compare(x, y);
+
     private void CreateHeap()
     {
         for (int i = size / 2 - 1; i >= 0; i--)
@@ -54,10 +56,8 @@ public class MyPriorityQueue<T>
         int right = RightChild(index);
         int extreme = index;
 
-        if (left < size && Compare(queue[left], queue[extreme]) < 0)
-            extreme = left;
-        if (right < size && Compare(queue[right], queue[extreme]) < 0)
-            extreme = right;
+        if (left < size && Compare(queue[left], queue[extreme]) < 0) extreme = left;
+        if (right < size && Compare(queue[right], queue[extreme]) < 0) extreme = right;
 
         if (extreme != index)
         {
@@ -71,12 +71,10 @@ public class MyPriorityQueue<T>
 
     private void Swap(int i, int j)
     {
-        T temp = queue[i];
+        T sw = queue[i];
         queue[i] = queue[j];
-        queue[j] = temp;
+        queue[j] = sw;
     }
-
-    private int Compare(T x, T y) => comparator.Compare(x, y);
 
     public void Add(T e)
     {
@@ -91,7 +89,7 @@ public class MyPriorityQueue<T>
         HeapifyUp(size - 1);
     }
 
-    private void HeapifyUp(int index)
+    private void HeapifyUp(int index) // упорядочивание
     {
         while (index > 0)
         {
