@@ -9,34 +9,33 @@ namespace ConsoleApp1
 {
     internal class Request : IComparable<Request>
     {
+        private Stopwatch time;
         private int priority;
         private int number;
         private int step;
-        private Stopwatch stopwatch;
 
+        public Stopwatch Stopwatch => time;
         public int Priority => priority;
         public int Number => number;
         public int Step => step;
-        public Stopwatch Stopwatch => stopwatch;
 
         public Request(int priority, int number, int step)
         {
+            time = Stopwatch.StartNew();
             this.priority = priority;
             this.number = number;
             this.step = step;
-            stopwatch = Stopwatch.StartNew();
         }
 
         ~Request()
         {
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.ElapsedMilliseconds);
+            time.Stop();
+            Console.WriteLine(time.ElapsedMilliseconds);
         }
 
         public int CompareTo(Request other)
         {
-            if (other == null)
-                return 1;
+            if (other == null) return 1;
             return this.priority.CompareTo(other.priority);
         }
     }

@@ -9,7 +9,7 @@ public class MyPriorityQueue<T>
 {
     private T[] queue;
     private int size;
-    private IComparer<T> comparator;
+    private IComparer<T> comparator = Comparer<T>.Default;
 
     public MyPriorityQueue() : this(11, null) { }
 
@@ -48,32 +48,11 @@ public class MyPriorityQueue<T>
         }
     }
 
-    private void Heapify(int index)
-    {
-        int left = LeftChild(index);
-        int right = RightChild(index);
-        int extreme = index;
-
-        if (left < size && Compare(queue[left], queue[extreme]) < 0)
-            extreme = left;
-        if (right < size && Compare(queue[right], queue[extreme]) < 0)
-            extreme = right;
-
-        if (extreme != index)
-        {
-            Swap(index, extreme);
-            Heapify(extreme);
-        }
-    }
-
-    private int LeftChild(int index) => 2 * index + 1;
-    private int RightChild(int index) => 2 * index + 2;
-
     private void Swap(int i, int j)
     {
-        T temp = queue[i];
+        T elem = queue[i];
         queue[i] = queue[j];
-        queue[j] = temp;
+        queue[j] = elem;
     }
 
     private int Compare(T x, T y) => comparator.Compare(x, y);
@@ -145,7 +124,6 @@ public class MyPriorityQueue<T>
             {
                 if (i < 0 || i >= size)
                     throw new ArgumentOutOfRangeException(nameof(i));
-
                 queue[i] = queue[size - 1];
                 size--;
                 Heapify(i);
@@ -170,7 +148,6 @@ public class MyPriorityQueue<T>
             {
                 if (i < 0 || i >= size)
                     throw new ArgumentOutOfRangeException(nameof(i));
-
                 queue[i] = queue[size - 1];
                 size--;
                 Heapify(i);
@@ -233,4 +210,26 @@ public class MyPriorityQueue<T>
         Heapify(0);
         return result;
     }
+
+    //упорядочивание очереди
+    private void Heapify(int index)
+    {
+        int left = LeftChild(index);
+        int right = RightChild(index);
+        int extreme = index;
+
+        if (left < size && Compare(queue[left], queue[extreme]) < 0)
+            extreme = left;
+        if (right < size && Compare(queue[right], queue[extreme]) < 0)
+            extreme = right;
+
+        if (extreme != index)
+        {
+            Swap(index, extreme);
+            Heapify(extreme);
+        }
+    }
+
+    private int LeftChild(int index) => 2 * index + 1;
+    private int RightChild(int index) => 2 * index + 2;
 }
