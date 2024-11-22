@@ -24,13 +24,10 @@ namespace ConsoleApp1
                 for (int i = 1; i < n + 1; i++)
                 {
                     Random rnd = new Random();
-                    int countRequests = rnd.Next(1, 11);
-                    for (int j = 0; j < countRequests; j++)
-                    {
-                        GenerateRequest(queue, i, countRequests);
-                    }
+                    int countRequests = rnd.Next(1, 11); // генерация заявок
+                    for (int j = 0; j < countRequests; j++) GenerateRequest(queue, i, countRequests); 
                     Request maxRequest = queue.Element();
-                    queue.Remove(maxRequest);
+                    queue.Remove(maxRequest); // удаляем заявку с наибольшим приоритетом по условию
                     writer.WriteLine("REMOVE " + maxRequest.Number + " " + maxRequest.Priority + " " + maxRequest.Step);
                 }
                 string s = "";
@@ -58,12 +55,10 @@ namespace ConsoleApp1
         }
         private static void GenerateRequest(MyPriorityQueue<Request> queue, int step, int countRequests)
         {
-
             Random rnd = new Random();
-            
             for (int i = 0; i <= countRequests; i++)
             {
-                int priority = rnd.Next(1, 5);
+                int priority = rnd.Next(1, 6); // случайная генерация приоритета заявки
                 Request request = new Request(priority, numberRequest, step);
                 numberRequest++;
                 queue.Add(request);
